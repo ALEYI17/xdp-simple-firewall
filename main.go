@@ -103,7 +103,7 @@ func ipToUint32(ipStr string) (uint32, error) {
 	}
 
 	// Convert to uint32 using Big Endian
-	return binary.BigEndian.Uint32(ip), nil
+	return binary.LittleEndian.Uint32(ip), nil
 }
 
 func block_ip(ip string, objs *ebpfObjects ) error{
