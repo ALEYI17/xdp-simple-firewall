@@ -79,6 +79,7 @@ func main() {
       }
     case command == "list":
       fmt.Printf("list")
+      print_list(objs)
 		case command == "help":
 			fmt.Println("Available commands: block <IP>, unblock <IP>, list, exit")
 		default:
@@ -137,4 +138,24 @@ func unblock_ip(ip string, objs *ebpfObjects ) error{
   }
 
   return nil;
+}
+
+
+func print_list(objs *ebpfObjects){
+  itr := objs.ebpfMaps.BlockList.Iterate()
+
+  var key uint32
+  var value ebpfIpEntry
+  fmt.Println("Blocked IPs:")
+  
+  for itr.Next(key,value ){
+    log.Printf("IP: %s",uint32ToIP(value.Ip) )
+  }
+
+}
+
+func uint32ToIP(ipUint32 uint32) string {
+	ip := make(net.IP, 4)
+	binary.LittleEndian.PutUint32(ip, ipUint32)
+	return ip.String()
 }
