@@ -9,9 +9,7 @@ import (
 	"log"
 	"net"
 	"os"
-	"os/signal"
 	"strings"
-	"syscall"
 
 	"github.com/cilium/ebpf"
 	"github.com/cilium/ebpf/link"
