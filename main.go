@@ -148,7 +148,7 @@ func print_list(objs *ebpfObjects){
   var value ebpfIpEntry
   fmt.Println("Blocked IPs:")
   
-  for itr.Next(key,value ){
+  for itr.Next(&key,&value ){
     log.Printf("IP: %s",uint32ToIP(value.Ip) )
   }
 
