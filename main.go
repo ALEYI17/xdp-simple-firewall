@@ -79,7 +79,7 @@ func main() {
       }
     case command == "list":
       fmt.Printf("list")
-      print_list(objs)
+      print_list(&objs)
 		case command == "help":
 			fmt.Println("Available commands: block <IP>, unblock <IP>, list, exit")
 		default:
