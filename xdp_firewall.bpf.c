@@ -66,8 +66,12 @@ int filter_xdp(struct xdp_md *ctx){
 
   struct ip_entry *ie;
   ie = bpf_map_lookup_elem(&block_list, &ip);
-  if(ie && ie->status == DENY)
-    return XDP_DROP;
-  
+   if (ie) {
+    bpf_printk("IP found in block list: %u, status: %d", ip, ie->status);
+    if (ie->status == DENY)
+      return XDP_DROP;
+  } else {
+    bpf_printk("IP not found in block list: %u", ip);
+  } 
   return XDP_PASS;
 }
