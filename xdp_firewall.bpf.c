@@ -57,9 +57,14 @@ int filter_xdp(struct xdp_md *ctx){
   if (!parse_ip_src_addr(ctx,&ip)){
     return XDP_PASS;
   }
+  
+  bpf_printk("Extracted IP: %u.%u.%u.%u",
+    (bpf_ntohl(ip) >> 24) & 0xFF,
+    (bpf_ntohl(ip) >> 16) & 0xFF,
+    (bpf_ntohl(ip) >> 8) & 0xFF,
+    bpf_ntohl(ip) & 0xFF);
 
   struct ip_entry *ie;
-
   ie = bpf_map_lookup_elem(&block_list, &ip);
   if(ie && ie->status == DENY)
     return XDP_DROP;
